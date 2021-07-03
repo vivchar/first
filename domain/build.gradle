@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+	compileSdkVersion rootProject.ext.compileSdkVersion
+	buildToolsVersion rootProject.ext.buildToolsVersion
+
+	defaultConfig {
+		minSdkVersion rootProject.ext.minSdkVersion
+		targetSdkVersion rootProject.ext.targetSdkVersion
+	}
+	buildTypes {
+		release {
+			minifyEnabled false
+		}
+	}
+
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
+}
+
+dependencies {
+	implementation "androidx.annotation:annotation:$androidxVersion"
+
+	implementation "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
+	implementation "io.reactivex.rxjava3:rxkotlin:$rxKotlinVersion"
+	implementation "io.reactivex.rxjava3:rxandroid:$rxAndroidVersion"
+
+	implementation "androidx.core:core-ktx:$axCoreVersion"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+}
