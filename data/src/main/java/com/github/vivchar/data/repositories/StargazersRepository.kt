@@ -11,63 +11,57 @@ import io.reactivex.rxjava3.subjects.ReplaySubject
  */
 class StargazersRepository(private val client: GithubClient) {
 
-	private val githubUsersSubject = ReplaySubject.createWithSize<List<User>>(1)
+	private val usersSubject = ReplaySubject.createWithSize<List<User>>(1)
 	private var currentPage = 1
 	private var lastLoadedPage = 0
 	private var hasMore = false
 	private var isReloading = false
 	private val originalUsers: MutableList<User> = ArrayList()
+	val all: Observable<List<User>> get() = usersSubject.hide()
+	val top10: Observable<List<User>> get() = usersSubject.hide().map { ArrayList(it.subList(0, it.size.coerceAtMost(10))) }
 
 	fun sendReloadRequest() {
-		Log.d(TAG, "sendReloadRequest")
-		/* vivchar: to avoid the API rate limit of the github https://developer.github.com/v3/#rate-limiting */
-		if (githubUsersSubject.value!!.isEmpty()) {
-			isReloading = true
-			currentPage = 1
-			sendPageLoadRequest(currentPage)
-		} else {
-			githubUsersSubject.onNext(ArrayList(originalUsers)) //temporary workaround
-		}
+//		Log.d(TAG, "sendReloadRequest")
+//		/* vivchar: to avoid the API rate limit of the github https://developer.github.com/v3/#rate-limiting */
+//		if (usersSubject.value!!.isEmpty()) {
+//			isReloading = true
+//			currentPage = 1
+//			fetchStargazers(currentPage)
+//		} else {
+//			usersSubject.onNext(ArrayList(originalUsers)) //temporary workaround
+//		}
 	}
 
 	fun sendLoadMoreRequest() {
-		if (hasMore) {
-			sendPageLoadRequest(lastLoadedPage + 1)
-		}
+//		if (hasMore) {
+//			fetchStargazers(lastLoadedPage + 1)
+//		}
 	}
 
-	private fun sendPageLoadRequest(page: Int) {
+	private fun fetchStargazers(page: Int): Observable<List<User>> {
 		Log.d(TAG, "sendPageLoadRequest: $page")
-		client.sendStargazersRequest(page)
+		return client.fetchStargazers(page).doOnNext { onStargazersReceived(page, it) }
 	}
 
 	fun onApplicationStarted() {
-		sendPageLoadRequest(currentPage)
+		/* move to interactor/presenter */
+		fetchStargazers(currentPage).subscribe()
 	}
 
-	fun onStargazersReceived(page: Int, list: List<User>) {
+	private fun onStargazersReceived(page: Int, list: List<User>) {
 		Log.d(TAG, "onStargazersReceived: " + page + " list: " + list.size)
 		lastLoadedPage = page
 		hasMore = list.isNotEmpty()
 		val newList = ArrayList<User>()
 		if (isReloading) {
 			isReloading = false
-		} else if (githubUsersSubject.value != null) { //load more response
-			newList.addAll(0, githubUsersSubject.value!!)
+		} else if (usersSubject.value != null) { //load more response
+			newList.addAll(0, usersSubject.value!!)
 		}
 		newList.addAll(list)
 		originalUsers.addAll(ArrayList(newList))
-		githubUsersSubject.onNext(newList)
+		usersSubject.onNext(newList)
 	}
-
-	fun onStargazersFailed(page: Int) {
-		Log.e(TAG, "onStargazersFailed: $page")
-		githubUsersSubject.onNext(ArrayList())
-	}
-
-	val all: Observable<List<User>> get() = githubUsersSubject.hide()
-
-	val top10: Observable<List<User>> get() = githubUsersSubject.hide().map { ArrayList(it.subList(0, it.size.coerceAtMost(10))) }
 
 	companion object {
 		private val TAG = StargazersRepository::class.java.simpleName

@@ -10,19 +10,20 @@ import io.reactivex.rxjava3.subjects.ReplaySubject
  */
 class ForksRepository(private val client: GithubClient) {
 
-	private val githubForksSubject = ReplaySubject.createWithSize<List<Fork>>(1)
+	private val forksSubject = ReplaySubject.createWithSize<List<Fork>>(1)
+	val forks: Observable<List<Fork>> get() = forksSubject.hide()
 
 	fun onApplicationStarted() {
-		client.sendForksRequest()
+		/* move to presenter/interactor */
+		fetchForks().subscribe()
 	}
 
-	fun onForksReceived(forks: List<Fork>) {
-		githubForksSubject.onNext(forks)
+	fun fetchForks(): Observable<List<Fork>> {
+		return client.fetchForks().doOnNext { onForksReceived(it) }
 	}
 
-	fun onForksFailed(message: String) {
-		githubForksSubject.onNext(ArrayList())
+	private fun onForksReceived(forks: List<Fork>) {
+		forksSubject.onNext(forks)
 	}
 
-	val githubForks: Observable<List<Fork>> get() = githubForksSubject.hide()
 }

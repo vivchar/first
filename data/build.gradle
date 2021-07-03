@@ -23,8 +23,10 @@ android {
 
 dependencies {
     implementation "androidx.annotation:annotation:$androidxVersion"
+
     implementation "com.squareup.retrofit2:retrofit:$retrofit2Version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2Version"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit2Version"
 
     implementation "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
     implementation "io.reactivex.rxjava3:rxkotlin:$rxKotlinVersion"

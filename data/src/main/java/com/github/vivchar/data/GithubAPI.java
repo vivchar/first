@@ -1,11 +1,12 @@
 package com.github.vivchar.data;
 
+
 import com.github.vivchar.data.raw.GithubForkRaw;
 import com.github.vivchar.data.raw.GithubUserRaw;
 
 import java.util.List;
 
-import retrofit2.Call;
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -15,8 +16,8 @@ import retrofit2.http.Query;
 interface GithubAPI {
 
 	@GET("repos/vivchar/RendererRecyclerViewAdapter/stargazers")
-	Call<List<GithubUserRaw>> getStargazers(@Query("page") int page);
+	Observable<List<GithubUserRaw>> getStargazers(@Query("page") int page);
 
 	@GET("repos/vivchar/RendererRecyclerViewAdapter/forks")
-	Call<List<GithubForkRaw>> getForks();
+	Observable<List<GithubForkRaw>> getForks();
 }
