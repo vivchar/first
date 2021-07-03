@@ -1,6 +1,6 @@
 package com.github.vivchar.network
 
-import com.github.vivchar.network.models.GithubFork
+import com.github.vivchar.network.models.GithubForkRaw
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.ReplaySubject
 
@@ -9,13 +9,13 @@ import io.reactivex.rxjava3.subjects.ReplaySubject
  */
 class ForksRepository internal constructor(private val client: GithubClient) {
 
-	private val githubForksSubject = ReplaySubject.createWithSize<List<GithubFork>>(1)
+	private val githubForksSubject = ReplaySubject.createWithSize<List<GithubForkRaw>>(1)
 
 	fun onApplicationStarted() {
 		client.sendForksRequest()
 	}
 
-	fun onForksReceived(forks: List<GithubFork>) {
+	fun onForksReceived(forks: List<GithubForkRaw>) {
 		githubForksSubject.onNext(forks)
 	}
 
@@ -24,5 +24,5 @@ class ForksRepository internal constructor(private val client: GithubClient) {
 //		mGithubForks.onError(new Exception(message));
 	}
 
-	val githubForks: Observable<List<GithubFork>> get() = githubForksSubject.hide()
+	val githubForks: Observable<List<GithubForkRaw>> get() = githubForksSubject.hide()
 }

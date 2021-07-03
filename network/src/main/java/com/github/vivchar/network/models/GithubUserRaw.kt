@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by Vivchar Vitaly on 09.10.17.
  */
-class GithubUser {
+class GithubUserRaw {
 	@SerializedName("login")
 	var login: String = ""
 	@SerializedName("id")
@@ -42,7 +42,7 @@ class GithubUser {
 	var isSiteAdmin = false
 
 	override fun toString(): String {
-		return GithubUser::class.java.simpleName +
+		return GithubUserRaw::class.java.simpleName +
 				"{" + iD +
 				", " + gravatarId +
 				", " + url +

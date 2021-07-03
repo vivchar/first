@@ -1,7 +1,7 @@
 package com.github.vivchar.network
 
-import com.github.vivchar.network.models.GithubFork
-import com.github.vivchar.network.models.GithubUser
+import com.github.vivchar.network.models.GithubForkRaw
+import com.github.vivchar.network.models.GithubUserRaw
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,8 +12,8 @@ import retrofit2.Response
 internal class GithubClient(private val githubAPI: GithubAPI, private val center: EventCenter) {
 
 	fun sendStargazersRequest(page: Int) {
-		githubAPI.getStargazers(page).enqueue(object : Callback<List<GithubUser>> {
-			override fun onResponse(call: Call<List<GithubUser>>, response: Response<List<GithubUser>>) {
+		githubAPI.getStargazers(page).enqueue(object : Callback<List<GithubUserRaw>> {
+			override fun onResponse(call: Call<List<GithubUserRaw>>, response: Response<List<GithubUserRaw>>) {
 				val body = response.body()
 				if (response.isSuccessful && body != null) {
 					center.onStargazersReceived(page, body)
@@ -22,15 +22,15 @@ internal class GithubClient(private val githubAPI: GithubAPI, private val center
 				}
 			}
 
-			override fun onFailure(call: Call<List<GithubUser>>, t: Throwable) {
+			override fun onFailure(call: Call<List<GithubUserRaw>>, t: Throwable) {
 				center.onStargazersFailed(page)
 			}
 		})
 	}
 
 	fun sendForksRequest() {
-		githubAPI.forks.enqueue(object : Callback<List<GithubFork>> {
-			override fun onResponse(call: Call<List<GithubFork>>, response: Response<List<GithubFork>>) {
+		githubAPI.forks.enqueue(object : Callback<List<GithubForkRaw>> {
+			override fun onResponse(call: Call<List<GithubForkRaw>>, response: Response<List<GithubForkRaw>>) {
 				val body = response.body()
 				if (response.isSuccessful && body != null) {
 					center.onForksReceived(body)
@@ -39,7 +39,7 @@ internal class GithubClient(private val githubAPI: GithubAPI, private val center
 				}
 			}
 
-			override fun onFailure(call: Call<List<GithubFork>>, t: Throwable) {
+			override fun onFailure(call: Call<List<GithubForkRaw>>, t: Throwable) {
 				center.onForksFailed(t.message!!)
 			}
 		})

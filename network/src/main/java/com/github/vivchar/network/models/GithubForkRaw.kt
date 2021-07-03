@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by Vivchar Vitaly on 12.10.17.
  */
-class GithubFork {
+class GithubForkRaw {
 	@SerializedName("id")
 	var iD = 0
 	@SerializedName("name")
@@ -13,7 +13,7 @@ class GithubFork {
 	@SerializedName("full_name")
 	var fullName: String = ""
 	@SerializedName("owner")
-	var owner: GithubUser = GithubUser()
+	var owner: GithubUserRaw = GithubUserRaw()
 	@SerializedName("private")
 	var _private = false
 	@SerializedName("html_url")

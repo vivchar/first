@@ -1,7 +1,7 @@
 package com.github.vivchar.network;
 
-import com.github.vivchar.network.models.GithubFork;
-import com.github.vivchar.network.models.GithubUser;
+import com.github.vivchar.network.models.GithubForkRaw;
+import com.github.vivchar.network.models.GithubUserRaw;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ import retrofit2.http.Query;
 interface GithubAPI {
 
 	@GET("repos/vivchar/RendererRecyclerViewAdapter/stargazers")
-	Call<List<GithubUser>> getStargazers(@Query("page") int page);
+	Call<List<GithubUserRaw>> getStargazers(@Query("page") int page);
 
 	@GET("repos/vivchar/RendererRecyclerViewAdapter/forks")
-	Call<List<GithubFork>> getForks();
+	Call<List<GithubForkRaw>> getForks();
 }

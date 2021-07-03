@@ -1,8 +1,8 @@
 package com.github.vivchar.network
 
 import android.app.Application
-import com.github.vivchar.network.models.GithubFork
-import com.github.vivchar.network.models.GithubUser
+import com.github.vivchar.network.models.GithubForkRaw
+import com.github.vivchar.network.models.GithubUserRaw
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -23,7 +23,7 @@ class MainManager(private val context: Application) : EventCenter {
 		forksRepository.onApplicationStarted()
 	}
 
-	override fun onStargazersReceived(page: Int, stargazers: List<GithubUser>) {
+	override fun onStargazersReceived(page: Int, stargazers: List<GithubUserRaw>) {
 		stargazersRepository.onStargazersReceived(page, stargazers)
 	}
 
@@ -31,7 +31,7 @@ class MainManager(private val context: Application) : EventCenter {
 		stargazersRepository.onStargazersFailed(page)
 	}
 
-	override fun onForksReceived(forks: List<GithubFork>) {
+	override fun onForksReceived(forks: List<GithubForkRaw>) {
 		forksRepository.onForksReceived(forks)
 	}
 
