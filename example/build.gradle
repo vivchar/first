@@ -50,4 +50,5 @@ dependencies {
 //	api 'com.github.vivchar:RendererRecyclerViewAdapter:2.5.0'
 	implementation project(path: ':rendererrecyclerviewadapter')
 	implementation project(path: ':network')
+	implementation project(path: ':domain')
 }

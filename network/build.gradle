@@ -32,4 +32,6 @@ dependencies {
 
     implementation "androidx.core:core-ktx:$axCoreVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+
+    implementation project(path: ':domain')
 }

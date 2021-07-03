@@ -9,14 +9,14 @@ import retrofit2.Response
 /**
  * Created by Vivchar Vitaly on 12.10.17.
  */
-internal class GithubClient(private val githubAPI: GithubAPI, private val center: EventCenter) {
+internal class GithubClient(private val githubAPI: GithubAPI, private val protocolMapper: ProtocolMapper, private val center: EventCenter) {
 
 	fun sendStargazersRequest(page: Int) {
 		githubAPI.getStargazers(page).enqueue(object : Callback<List<GithubUserRaw>> {
 			override fun onResponse(call: Call<List<GithubUserRaw>>, response: Response<List<GithubUserRaw>>) {
 				val body = response.body()
 				if (response.isSuccessful && body != null) {
-					center.onStargazersReceived(page, body)
+					center.onStargazersReceived(page, body.map { protocolMapper.mapUser(it) })
 				} else {
 					center.onStargazersFailed(page)
 				}
@@ -33,7 +33,7 @@ internal class GithubClient(private val githubAPI: GithubAPI, private val center
 			override fun onResponse(call: Call<List<GithubForkRaw>>, response: Response<List<GithubForkRaw>>) {
 				val body = response.body()
 				if (response.isSuccessful && body != null) {
-					center.onForksReceived(body)
+					center.onForksReceived(body.map { protocolMapper.mapFork(it) })
 				} else {
 					center.onForksFailed("Response is failed")
 				}

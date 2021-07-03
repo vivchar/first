@@ -30,8 +30,8 @@ internal class GithubPresenter(
 	public override fun viewShown() {
 
 		val combineLatest = Observables.combineLatest(
-			stargazersRepository.all.mapIterable { StargazerModel(it.iD, it.login, it.avatarUrl, it.htmlUrl) },
-			stargazersRepository.top10.mapIterable { StargazerModel(it.iD, it.login, it.avatarUrl, it.htmlUrl) },
+			stargazersRepository.all.mapIterable { StargazerModel(it.id, it.login, it.avatarUrl, it.htmlUrl) },
+			stargazersRepository.top10.mapIterable { StargazerModel(it.id, it.login, it.avatarUrl, it.htmlUrl) },
 			forksRepository.githubForks.mapIterable { ForkModel(it.owner.login, it.owner.avatarUrl, it.owner.htmlUrl) }
 		) { stargazers, topStargazers, forkModels ->
 			val allModels = ArrayList<ViewModel>()

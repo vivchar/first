@@ -1,8 +1,8 @@
 package com.github.vivchar.network
 
 import android.app.Application
-import com.github.vivchar.network.models.GithubForkRaw
-import com.github.vivchar.network.models.GithubUserRaw
+import com.github.vivchar.domain.entities.Fork
+import com.github.vivchar.domain.entities.User
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -13,7 +13,8 @@ class MainManager(private val context: Application) : EventCenter {
 
 	private val retrofit = Retrofit.Builder().baseUrl(API_URL).addConverterFactory(GsonConverterFactory.create()).build()
 	private val githubAPI = retrofit.create(GithubAPI::class.java)
-	private val githubClient = GithubClient(githubAPI, this)
+	private val protocolMapper = ProtocolMapper()
+	private val githubClient = GithubClient(githubAPI, protocolMapper, this)
 
 	val stargazersRepository = StargazersRepository(githubClient)
 	val forksRepository = ForksRepository(githubClient)
@@ -23,7 +24,7 @@ class MainManager(private val context: Application) : EventCenter {
 		forksRepository.onApplicationStarted()
 	}
 
-	override fun onStargazersReceived(page: Int, stargazers: List<GithubUserRaw>) {
+	override fun onStargazersReceived(page: Int, stargazers: List<User>) {
 		stargazersRepository.onStargazersReceived(page, stargazers)
 	}
 
@@ -31,7 +32,7 @@ class MainManager(private val context: Application) : EventCenter {
 		stargazersRepository.onStargazersFailed(page)
 	}
 
-	override fun onForksReceived(forks: List<GithubForkRaw>) {
+	override fun onForksReceived(forks: List<Fork>) {
 		forksRepository.onForksReceived(forks)
 	}
 
