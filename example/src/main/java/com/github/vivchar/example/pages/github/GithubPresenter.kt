@@ -6,8 +6,8 @@ import com.github.vivchar.example.pages.github.items.CategoryModel
 import com.github.vivchar.example.pages.github.items.ForkModel
 import com.github.vivchar.example.pages.github.items.RecyclerViewModel
 import com.github.vivchar.example.pages.github.items.StargazerModel
-import com.github.vivchar.network.ForksManager
-import com.github.vivchar.network.StargazersManager
+import com.github.vivchar.network.ForksRepository
+import com.github.vivchar.network.StargazersRepository
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -18,10 +18,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * Created by Vivchar Vitaly on 10.10.17.
  */
 internal class GithubPresenter(
-	private val router: UIRouter,
 	private val menuController: OptionsMenuController,
-	private val stargazersManager: StargazersManager,
-	private val forksManager: ForksManager,
+	private val stargazersRepository: StargazersRepository,
+	private val forksRepository: ForksRepository,
 	private val view: View
 ) : BasePresenter() {
 	private var count = 0
@@ -31,9 +30,9 @@ internal class GithubPresenter(
 	public override fun viewShown() {
 
 		val combineLatest = Observables.combineLatest(
-			stargazersManager.all.mapIterable { StargazerModel(it.id, it.login, it.avatarUrl, it.htmlUrl) },
-			stargazersManager.top10.mapIterable { StargazerModel(it.id, it.login, it.avatarUrl, it.htmlUrl) },
-			forksManager.githubForks.mapIterable { ForkModel(it.ownerLogin, it.ownerAvatarUrl, it.ownerHtmlUrl) }
+			stargazersRepository.all.mapIterable { StargazerModel(it.id, it.login, it.avatarUrl, it.htmlUrl) },
+			stargazersRepository.top10.mapIterable { StargazerModel(it.id, it.login, it.avatarUrl, it.htmlUrl) },
+			forksRepository.githubForks.mapIterable { ForkModel(it.ownerLogin, it.ownerAvatarUrl, it.ownerHtmlUrl) }
 		) { stargazers, topStargazers, forkModels ->
 			val allModels = ArrayList<ViewModel>()
 			val topStargazersModels = topStargazers.toMutableList()
@@ -97,7 +96,7 @@ internal class GithubPresenter(
 		Log.d(TAG, "================================================")
 		count++
 		view.showProgressView()
-		stargazersManager.sendReloadRequest()
+		stargazersRepository.sendReloadRequest()
 	}
 
 	fun onStargazerClicked(model: StargazerModel, isChecked: Boolean) {
@@ -141,7 +140,7 @@ internal class GithubPresenter(
 		if (!isLoadingMore) {
 			Log.d(TAG, "onLoadMore")
 			isLoadingMore = true
-			stargazersManager.sendLoadMoreRequest()
+			stargazersRepository.sendLoadMoreRequest()
 			view.showLoadMoreView()
 		}
 	}

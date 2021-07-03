@@ -33,10 +33,9 @@ class GithubFragment : BaseScreenFragment() {
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		githubPresenter = GithubPresenter(
-			router,
 			menuController,
-			instance.stargazersManager,
-			instance.forksManager,
+			instance.stargazersRepository,
+			instance.forksRepository,
 			mainPresenterView
 		)
 

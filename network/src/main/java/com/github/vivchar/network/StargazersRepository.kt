@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.subjects.ReplaySubject
 /**
  * Created by Vivchar Vitaly on 09.10.17.
  */
-class StargazersManager internal constructor(private val client: GithubClient) {
+class StargazersRepository internal constructor(private val client: GithubClient) {
 
 	private val githubUsersSubject = ReplaySubject.createWithSize<List<GithubUser>?>(1)
 	private var currentPage = 1
@@ -69,6 +69,6 @@ class StargazersManager internal constructor(private val client: GithubClient) {
 	val top10: Observable<List<GithubUser>> get() = githubUsersSubject.hide().map { ArrayList(it.subList(0, it.size.coerceAtMost(10))) }
 
 	companion object {
-		private val TAG = StargazersManager::class.java.simpleName
+		private val TAG = StargazersRepository::class.java.simpleName
 	}
 }

@@ -15,28 +15,28 @@ class MainManager(private val context: Application) : GithubClient.EventListener
 	private val githubAPI = retrofit.create(GithubAPI::class.java)
 	private val githubClient = GithubClient(githubAPI, this)
 
-	val stargazersManager = StargazersManager(githubClient)
-	val forksManager = ForksManager(githubClient)
+	val stargazersRepository = StargazersRepository(githubClient)
+	val forksRepository = ForksRepository(githubClient)
 
 	private fun onApplicationStarted() {
-		stargazersManager.onApplicationStarted()
-		forksManager.onApplicationStarted()
+		stargazersRepository.onApplicationStarted()
+		forksRepository.onApplicationStarted()
 	}
 
 	override fun onStargazersReceived(page: Int, stargazers: List<GithubUser>) {
-		stargazersManager.onStargazersReceived(page, stargazers)
+		stargazersRepository.onStargazersReceived(page, stargazers)
 	}
 
 	override fun onStargazersFailed(page: Int) {
-		stargazersManager.onStargazersFailed(page)
+		stargazersRepository.onStargazersFailed(page)
 	}
 
 	override fun onForksReceived(forks: List<GithubFork>) {
-		forksManager.onForksReceived(forks)
+		forksRepository.onForksReceived(forks)
 	}
 
 	override fun onForksFailed(message: String) {
-		forksManager.onForksFailed(message)
+		forksRepository.onForksFailed(message)
 	}
 
 	companion object {
