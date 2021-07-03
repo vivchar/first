@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 /**
  * Created by Vivchar Vitaly on 08.10.17.
  */
-class MainManager(private val context: Application) : GithubClient.EventListener {
+class MainManager(private val context: Application) : EventCenter {
 
 	private val retrofit = Retrofit.Builder().baseUrl(API_URL).addConverterFactory(GsonConverterFactory.create()).build()
 	private val githubAPI = retrofit.create(GithubAPI::class.java)
