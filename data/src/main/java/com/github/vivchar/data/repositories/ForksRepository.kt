@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.subjects.ReplaySubject
 /**
  * Created by Vivchar Vitaly on 12.10.17.
  */
-class ForksRepository internal constructor(private val client: GithubClient) {
+class ForksRepository(private val client: GithubClient) {
 
 	private val githubForksSubject = ReplaySubject.createWithSize<List<Fork>>(1)
 

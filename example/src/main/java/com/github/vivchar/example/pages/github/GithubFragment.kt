@@ -17,7 +17,7 @@ import com.github.vivchar.example.BaseScreenFragment
 import com.github.vivchar.example.R
 import com.github.vivchar.example.pages.github.items.*
 import com.github.vivchar.example.widgets.*
-import com.github.vivchar.data.MainManager.Companion.instance
+import com.github.vivchar.example.MainManager.Companion.instance
 import com.github.vivchar.rendererrecyclerviewadapter.*
 import com.google.android.material.snackbar.Snackbar
 import java.util.*

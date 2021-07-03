@@ -5,11 +5,17 @@ import com.github.vivchar.data.raw.GithubUserRaw
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Created by Vivchar Vitaly on 12.10.17.
  */
-internal class GithubClient(private val githubAPI: GithubAPI, private val protocolMapper: ProtocolMapper, private val center: EventCenter) {
+class GithubClient(url: String, private val protocolMapper: ProtocolMapper, private val center: EventCenter) {
+
+	/* move outside if needed */
+	private val retrofit = Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build()
+	private val githubAPI = retrofit.create(GithubAPI::class.java)
 
 	fun sendStargazersRequest(page: Int) {
 		githubAPI.getStargazers(page).enqueue(object : Callback<List<GithubUserRaw>> {

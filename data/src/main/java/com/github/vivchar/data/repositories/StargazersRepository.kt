@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.subjects.ReplaySubject
 /**
  * Created by Vivchar Vitaly on 09.10.17.
  */
-class StargazersRepository internal constructor(private val client: GithubClient) {
+class StargazersRepository(private val client: GithubClient) {
 
 	private val githubUsersSubject = ReplaySubject.createWithSize<List<User>>(1)
 	private var currentPage = 1
