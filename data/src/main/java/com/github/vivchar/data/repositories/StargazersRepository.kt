@@ -1,6 +1,7 @@
-package com.github.vivchar.network
+package com.github.vivchar.data.repositories
 
 import android.util.Log
+import com.github.vivchar.data.GithubClient
 import com.github.vivchar.domain.entities.User
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.ReplaySubject

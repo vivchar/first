@@ -1,7 +1,7 @@
 package com.github.vivchar.example
 
 import android.app.Application
-import com.github.vivchar.network.MainManager
+import com.github.vivchar.data.MainManager
 
 /**
  * Created by Vivchar Vitaly on 08.10.17.

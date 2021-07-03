@@ -1,6 +1,8 @@
-package com.github.vivchar.network
+package com.github.vivchar.data
 
 import android.app.Application
+import com.github.vivchar.data.repositories.ForksRepository
+import com.github.vivchar.data.repositories.StargazersRepository
 import com.github.vivchar.domain.entities.Fork
 import com.github.vivchar.domain.entities.User
 import retrofit2.Retrofit

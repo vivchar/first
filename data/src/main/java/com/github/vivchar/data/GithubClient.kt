@@ -1,7 +1,7 @@
-package com.github.vivchar.network
+package com.github.vivchar.data
 
-import com.github.vivchar.network.models.GithubForkRaw
-import com.github.vivchar.network.models.GithubUserRaw
+import com.github.vivchar.data.raw.GithubForkRaw
+import com.github.vivchar.data.raw.GithubUserRaw
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

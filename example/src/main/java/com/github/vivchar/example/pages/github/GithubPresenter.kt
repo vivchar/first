@@ -6,8 +6,8 @@ import com.github.vivchar.example.pages.github.items.CategoryModel
 import com.github.vivchar.example.pages.github.items.ForkModel
 import com.github.vivchar.example.pages.github.items.RecyclerViewModel
 import com.github.vivchar.example.pages.github.items.StargazerModel
-import com.github.vivchar.network.ForksRepository
-import com.github.vivchar.network.StargazersRepository
+import com.github.vivchar.data.repositories.ForksRepository
+import com.github.vivchar.data.repositories.StargazersRepository
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable

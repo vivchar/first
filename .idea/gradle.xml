@@ -11,9 +11,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/example" />
-            <option value="$PROJECT_DIR$/network" />
             <option value="$PROJECT_DIR$/rendererrecyclerviewadapter" />
           </set>
         </option>

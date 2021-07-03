@@ -1,2 +1,2 @@
 include ':domain'
-include ':example', ':rendererrecyclerviewadapter', ':network'
+include ':example', ':rendererrecyclerviewadapter', ':data'

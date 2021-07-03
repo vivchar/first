@@ -1,4 +1,4 @@
-package com.github.vivchar.network.models
+package com.github.vivchar.data.raw
 
 import com.google.gson.annotations.SerializedName
 

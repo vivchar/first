@@ -1,5 +1,6 @@
-package com.github.vivchar.network
+package com.github.vivchar.data.repositories
 
+import com.github.vivchar.data.GithubClient
 import com.github.vivchar.domain.entities.Fork
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.ReplaySubject
@@ -21,7 +22,6 @@ class ForksRepository internal constructor(private val client: GithubClient) {
 
 	fun onForksFailed(message: String) {
 		githubForksSubject.onNext(ArrayList())
-//		mGithubForks.onError(new Exception(message));
 	}
 
 	val githubForks: Observable<List<Fork>> get() = githubForksSubject.hide()

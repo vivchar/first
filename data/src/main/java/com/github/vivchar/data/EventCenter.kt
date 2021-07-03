@@ -1,4 +1,4 @@
-package com.github.vivchar.network
+package com.github.vivchar.data
 
 import com.github.vivchar.domain.entities.Fork
 import com.github.vivchar.domain.entities.User
